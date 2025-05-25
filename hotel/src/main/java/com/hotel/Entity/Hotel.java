@@ -4,6 +4,9 @@ package com.hotel.Entity;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Data
 @Entity
 @Table(name="hotel")
@@ -20,10 +23,14 @@ public class Hotel {
     @Column(name="hotel_address", nullable = false)
     private String hotelAddress;
 
-    public Hotel(int hotelId, String hotelName, String hotelAddress) {
+    @OneToMany(mappedBy = "hotel",cascade = CascadeType.ALL)
+    private List<Menu> menu = new ArrayList<>();
+
+    public Hotel(int hotelId, String hotelName, String hotelAddress, List<Menu> menu) {
         this.hotelId = hotelId;
         this.hotelName = hotelName;
         this.hotelAddress = hotelAddress;
+        this.menu = menu;
     }
 
     public Hotel() {
@@ -51,5 +58,13 @@ public class Hotel {
 
     public void setHotelAddress(String hotelAddress) {
         this.hotelAddress = hotelAddress;
+    }
+
+    public List<Menu> getMenu() {
+        return menu;
+    }
+
+    public void setMenu(List<Menu> menu) {
+        this.menu = menu;
     }
 }
